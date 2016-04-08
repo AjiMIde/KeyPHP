@@ -3,7 +3,7 @@ That's my php library. I learn many course of php but find i can't prove my prog
 
 There are the core code module above:
 
-## upDownFile.class.php 
+#### upDownFile.class.php 
 >That's a file upload and download Set,offer several methods above:
 
-### getFileExt            : Get a file's extension name,like: .zip, .jpg
+##### getFileExt            : Get a file's extension name,like: .zip, .jpg

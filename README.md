@@ -19,3 +19,24 @@ There are the core code module above:
 **6. download_header_mid**
 
 **7. download_header_smp**
+
+### Document.class.php
+>That's a Document Operation Set,offer several methods above:
+ 
+**1.getSubFiles**		:Get the list of specified type of files from document;
+ 
+**2.getSubDirs**		:Get the list of sub directories from a directory path, not include files
+
+**3.createDir**			:Create a directory
+
+**4.delDir**			:Del the directory
+
+**5.recurse_copy**		:Copy directory
+
+**6.getDirSize**		:Get the size of directory
+
+**7.Zip operation**		:
+
+>**createZip**          :Create zip 
+>**xxxx**               :extract zip
+

@@ -29,9 +29,6 @@
  */
 class upDownFile
 {
-    function test() {
-    }
-
     /**
      * 如果上传失败，则判断失败的原因，返回专业的错误信息     *
      * $error 上传失败的序号
@@ -246,7 +243,6 @@ class upDownFile
                 }
             }
         }
-//        var_dump($files);
     }
 
     /**这是一个有硬性规定需要  $name 上传文件 name 属性
@@ -274,6 +270,7 @@ class upDownFile
                 $files[$key]['size'] = $file['size'][$key];
 
                 $_FILES[$key] = $files[$key];
+
                 $ary = $this->upload($key, $savePath, $fileKind);
 
                 if($ary['success']){

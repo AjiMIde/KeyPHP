@@ -346,9 +346,11 @@ class upDownFile
      * @param $file下载文件路径
      */
     public function downLoad_header_smp($file) {
-        header('content-disposition:attachment;filename=' . basename($file));
-        header('content-length:' . filesize($file));
-        readfile($file);
+        if(file_exists($file)){
+            header('content-disposition:attachment;filename=' . basename($file));
+            header('content-length:' . filesize($file));
+            readfile($file);
+        }
     }
 }
 ?>

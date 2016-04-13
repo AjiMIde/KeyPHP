@@ -27,7 +27,7 @@
  * Modified    : 2016/3/20-14:47
  *
  */
-class upDownFile
+class UpDownFile
 {
     /**
      * 如果上传失败，则判断失败的原因，返回专业的错误信息     *

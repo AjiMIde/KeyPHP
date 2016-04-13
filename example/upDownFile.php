@@ -1,7 +1,7 @@
 <?php
 include_once "../keyCommon/upDownFile.class.php";
 
-$upDownFileObj = new upDownFile();
+$upDownFileObj = new UpDownFile();
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
 if($action == 'upload'){

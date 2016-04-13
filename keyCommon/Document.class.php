@@ -421,7 +421,7 @@ class Document
             $result = $e->getMessage();
         }
 
-        print_r($result);
+        return $result;
     }
 
     function addFileToZip($path, $zip) {
@@ -437,6 +437,5 @@ class Document
         }
         @closedir($path);
     }
-
 
 }

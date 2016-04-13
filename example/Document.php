@@ -8,6 +8,10 @@ $dir = "../resources/uploads/";
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
 if ($action == 'createZip') {
+    print_r("========<b>Create zip</b>==========<br/>");
+    $result = $instance->createZip("$dir/aji.zip", "$dir");
+    var_dump($result);
+
 
 } elseif ($action == 'del') {
     print_r("========<b>Del Dir</b>==========");

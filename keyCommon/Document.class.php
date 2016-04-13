@@ -95,6 +95,11 @@ class Document
      * @return bool:true|string:error msg
      */
     private function _checkDir($dir) {
+        $suffix = substr($dir, strlen($dir) - 1);
+        if ($suffix != "/") {
+            $dir .= "/";
+        }
+
         if (!$dir) {
             return self::ERR_INVALID_PATH;
         }
@@ -136,39 +141,54 @@ class Document
         }
     }
 
+    private function _getSubFiles($dirPath, $regex, $deep, &$fileSize, &$fileName, &$fileTime, &$fileArr) {
+        $dir = @opendir($dirPath);
+
+        while (($file = @readdir($dir)) !== false) {
+            $suffix = "." . pathinfo($file, PATHINFO_EXTENSION);
+
+            if ($file != "." && $file != "..") {
+                $path = $dirPath . '/' . $file;
+
+                if (is_dir($path) && $deep) {
+
+                    self::_getSubFiles($path . "/", $regex, $deep, $fileSize, $fileName, $fileTime, $fileArr);
+
+                } elseif (preg_match($regex, $suffix, $matches)) {
+                    $fileSize[] = round((filesize($path) / 1024), 2);//获取文件大小
+                    $fileName[] = $path;//获取文件名称
+                    $fileTime[] = date("Y-m-d H:i:s", filemtime($path));//获取文件最近修改日期
+                    $fileArr[] = iconv("GB2312", "UTF-8", $file);
+                }
+            }
+        }
+        @closedir($dir);
+    }
+
     /**
      * Get the sub file from the directory path
      *
      * @param string $dirPath The directory's path
      * @param string $fileType The file filter eg: all, img, flash, media, file(windows)
      * @param string $fileSort The type of files sort eg: name, size, time
-     * @param int $sortType Eg: SORT_ASC/SORT_DESC
+     * @param int $sortType SORT_ASC/SORT_DESC
+     * @param bool $deep Find in the sub directory or not
      *
      * @return array/string
      */
-    public function getSubFiles($dirPath, $fileType = 'all', $fileSort = 'name', $sortType = SORT_ASC) {
-        $regex = self::_getFileTypeRegex($fileType);
-
+    public function getSubFiles($dirPath, $fileType = 'all', $fileSort = 'name', $sortType = SORT_ASC, $deep = false) {
         if (self::_checkDir($dirPath) !== TRUE) {
             return self::_checkDir($dirPath);
         }
 
-        $dir = @opendir($dirPath);
+        $regex = self::_getFileTypeRegex($fileType);
 
-        while (($file = @readdir($dir)) !== false) {
-            $suffix = substr($file, strpos($file, "."));
+        $fileSize = array();
+        $fileName = array();
+        $fileTime = array();
+        $fileArr = array();
 
-            if ($file != "." && $file != ".." && preg_match($regex, $suffix, $matches)) {
-
-                $path = $dirPath . '/' . $file;     //设置目录，用于含有子目录的情况
-
-                $fileSize[] = round((filesize($path) / 1024), 2);//获取文件大小
-                $fileName[] = $path;//获取文件名称
-                $fileTime[] = date("Y-m-d H:i:s", filemtime($path));//获取文件最近修改日期
-                $fileArr[] = iconv("GB2312", "UTF-8", $file);
-            }
-        }
-        @closedir($dir);
+        self::_getSubFiles($dirPath, $regex, $deep, $fileSize, $fileName, $fileTime, $fileArr);
 
         switch ($fileSort) {
             case 'name':
@@ -187,29 +207,31 @@ class Document
         return $fileArr;
     }
 
+    private function _getSubDirs($dirPath, &$subDirs) {
+        $dir = opendir($dirPath);
+        while ($sub = readdir($dir)) {
+            if ($sub != "." && $sub != "..") {
+                if (is_dir($dirPath . $sub)) {
+                    $subDirs[] = $sub;
+                    self::_getSubDirs($dirPath . $sub . "/", $subDirs);
+                }
+            }
+        }
+    }
+
     /**
      * Get the sub directories from the directory path , not include files
      *
-     * @param $dirPath          The directory's path
+     * @param $dirPath  String      The directory's path
+     * @param $deep     Bool        Find in the sub directory or not
      * @return array|string
      */
-    public function getSubDirs($dirPath) {
-
+    public function getSubDirs($dirPath, $deep = false) {
         if (self::_checkDir($dirPath) !== TRUE) {
             return self::_checkDir($dirPath);
         }
 
-        $dir = opendir($dirPath);
-
-        $subDirs = Array();
-
-        while ($sub = readdir($dir)) {
-            if ($sub != "." && $sub != ".." && !strpos($sub, ".")) {
-                $temp = $sub;
-                $subDirs[] = $temp;
-            }
-        }
-        closedir($dir);
+        self::_getSubDirs($dirPath, $subDirs);
 
         return $subDirs;
     }
@@ -301,7 +323,7 @@ class Document
      * @return float
      */
     public function getDirSize($dirPath, $size_unit = "mb") {
-        if(($msg = self::_checkDir($dirPath)) !== TRUE){
+        if (($msg = self::_checkDir($dirPath)) !== TRUE) {
             return $msg;
         }
         $size = self::_getDirSize($dirPath);
@@ -309,19 +331,20 @@ class Document
         switch ($size_unit) {
             case 'kb':
                 echo 'size';
-                $size = $size/1024;
+                $size = $size / 1024;
                 break;
             case 'g':
-                $size = $size/1024/1024/1024;
+                $size = $size / 1024 / 1024 / 1024;
                 break;
             default:
-                $size = $size/1024/1024;
+                $size = $size / 1024 / 1024;
                 break;
         }
 
         return $size;
     }
-    private function _getDirSize($dirPath){
+
+    private function _getDirSize($dirPath) {
         $dir = @opendir($dirPath);
         $size = '0';
 

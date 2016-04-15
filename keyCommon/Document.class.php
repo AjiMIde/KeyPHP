@@ -18,9 +18,9 @@
  * @package    keyCommon
  * @email      Adele513900383@gmail.com
  *
- * Version     : 1.4
- * DateTime    : 2015/10/15-17:50
- * Modified    : 2016/04/07-9:51
+ * Version     : 1.6
+ * DateTime    : 2015/10/15
+ * Modified    : 2016/04/15
  */
 class Document
 {
@@ -58,8 +58,8 @@ class Document
     /**
      * Get the file type regex
      *
-     * @param string $type The file filter eg: all, img, flash, media, file(windows)
-     * @return string $regex
+     * @param  string $type The file filter eg: all, img, flash, media, file(windows)
+     * @return string
      */
     private function _getFileTypeRegex($type = 'all') {
         switch ($type) {
@@ -91,8 +91,8 @@ class Document
     /**
      * Check the directory is valid
      *
-     * @param $dir
-     * @return bool:true|string:error msg
+     * @param  string $dir
+     * @return bool|string  true/error msg
      */
     private function _checkDir($dir) {
         $suffix = substr($dir, strlen($dir) - 1);
@@ -120,7 +120,7 @@ class Document
     /**
      * gets instance of this class
      *
-     * @return Docuemnt instance
+     * @return Document|Object
      */
     public static function getInstance() {
         if (self::$_instance === null) {
@@ -130,9 +130,9 @@ class Document
     }
 
     /**
-     * #Create a directory
+     * Create a directory
      *
-     * @param $dirPath The directory's path
+     * @param string $dirPath The directory's path
      */
     public function createDir($dirPath) {
         if (@is_dir($dirPath) === false) {
@@ -168,13 +168,13 @@ class Document
     /**
      * Get the sub file from the directory path
      *
-     * @param string $dirPath The directory's path
-     * @param string $fileType The file filter eg: all, img, flash, media, file(windows)
-     * @param string $fileSort The type of files sort eg: name, size, time
-     * @param int $sortType SORT_ASC/SORT_DESC
-     * @param bool $deep Find in the sub directory or not
+     * @param string $dirPath  The directory's path
+     * @param string $fileType [optional] The file filter eg: all, img, flash, media, file(windows)
+     * @param string $fileSort [optional] The type of files sort eg: name, size, time
+     * @param int    $sortType [optional] SORT_ASC/SORT_DESC
+     * @param bool   $deep     [optional] Find in the sub directory or not
      *
-     * @return array/string
+     * @return array|string
      */
     public function getSubFiles($dirPath, $fileType = 'all', $fileSort = 'name', $sortType = SORT_ASC, $deep = false) {
         if (self::_checkDir($dirPath) !== TRUE) {
@@ -222,8 +222,9 @@ class Document
     /**
      * Get the sub directories from the directory path , not include files
      *
-     * @param $dirPath  String      The directory's path
-     * @param $deep     Bool        Find in the sub directory or not
+     * @param string $dirPath The directory's path
+     * @param bool   $deep Find in the sub directory or not
+     *
      * @return array|string
      */
     public function getSubDirs($dirPath, $deep = false) {
@@ -239,8 +240,8 @@ class Document
     /**
      * Del the directory
      *
-     * @param $dir      The directory's path
-     * @return bool:true|string:error msg
+     * @param  string $dir The directory's path
+     * @return bool|string true/error msg
      */
     public function delDir($dir) {
         $result = true;
@@ -277,9 +278,9 @@ class Document
     /**
      * Copy directory
      *
-     * @param string $src source directory
-     * @param string $dst destination directory
-     * @return bool:true|string:error msg
+     * @param  string $src source directory
+     * @param  string $dst destination directory
+     * @return bool|string true|error msg
      */
     public function recurse_copy($src, $dst) {
         $result = true;
@@ -317,7 +318,7 @@ class Document
     /**
      * Get the size of directory using directory path
      *
-     * @param string $dirPath The directory's path
+     * @param string $dirPath   The directory's path
      * @param string $size_unit The size unit eg: kb/mb/g   default:mb
      *
      * @return float
@@ -364,8 +365,9 @@ class Document
     /**
      * Provide it to createZip
      *
-     * @param $zip
-     * @param $src
+     * @param string $zip
+     * @param string $src
+     * @param string $subSrc
      */
     private function _addFileToZip($zip, $src, $subSrc = "") {
         $list = scandir($src);
@@ -390,12 +392,11 @@ class Document
     /**
      * Create zip file
      *
-     * @param string $zipName like: tmp/xx/xx/zip.zip Need the path
-     * @param string $src The directory which we create zip from it like: tmp/xx/xx/
-     * @return bool:true/string:msg
+     * @param  string $zipName Like: tmp/xx/xx/zip.zip Need the path
+     * @param  string $src The directory which we create zip from it like: tmp/xx/xx/
+     * @return bool/string  true|error msg
      */
     public function createZip($zipName, $src) {
-
         $result = true;
 
         try {

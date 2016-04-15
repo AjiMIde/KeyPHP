@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2016-2020 Aji
  * That's a file upload and download Set,offer several methods above:
@@ -30,8 +31,10 @@
 class UpDownFile
 {
     /**
-     * 如果上传失败，则判断失败的原因，返回专业的错误信息     *
-     * $error 上传失败的序号
+     * 如果上传失败，则判断失败的原因，返回专业的错误信息
+     *
+     * @param  int $error Error num
+     * @return mixed
      */
     private function checkProErrorMsg($error) {
         $uploadError = array(
@@ -50,6 +53,9 @@ class UpDownFile
 
     /**
      * 如果上传失败，返回普通错误
+     *
+     * @param  int $error Error num
+     * @return string
      */
     private function checkErrorMsg($error) {
         switch ($error) {
@@ -75,7 +81,9 @@ class UpDownFile
 
     /**
      * 检查该存放路径是否合法
-     * $path 路径，一般为绝对路径
+     *
+     * @param  string $path 路径，一般为绝对路径
+     * @return string
      */
     private function checkDir($path) {
         //检查是否存在路径
@@ -95,24 +103,11 @@ class UpDownFile
     }
 
     /**
-     * 获取一个带后缀的文件名的后缀
-     * $name,一个带后缀的文件名，例如：image.jpg
-     */
-    public function getFileExt($name) {
-        //获得文件扩展名
-        $temp_arr = explode(".", $name);
-        $file_ext = end($temp_arr);
-        $file_ext = strtolower($file_ext);
-        return $file_ext;
-//        $file_ext = array_pop($temp_arr);
-//        $file_ext = trim($file_ext);
-//        $file_ext = pathinfo($name,PATHINFO_EXTENSION),
-    }
-
-    /**
      * 检查上传的文件格式是否合法
-     * $fileName     完整的文件名，如 image.jpg
-     * $kind         需要检测的文件格式:all/image/img/flash/media/file，或者也可以是一个array('kind1','kind2);
+     *
+     * @param  string       $fileName 完整的文件名，如 image.jpg
+     * @param  string|array $kind 需要检测的文件格式:all/image/img/flash/media/file，或者也可以是一个array('kind1','kind2);
+     * @return bool|string
      */
     private function checkAllowFile($fileName, $kind) {
         //定义允许上传的文件扩展名
@@ -140,9 +135,12 @@ class UpDownFile
 
     /**
      * 输出信息，主要以数组的形式
-     * $flag 成功标志，0 为false, 1 为true
-     * $msg 成功或失败的信息
-     * $newName 专为上传图片设置，当上传的图片被系统重命一个随机名，则返回该随机名
+     *
+     * @param bool   $flag 0 为false, 1 为true
+     * @param string $msg 成功或失败的信息
+     * @param string $proMsg 成功或失败的信息
+     * @param string $newName 专为上传图片设置，当上传的图片被系统重命一个随机名，则返回该随机名
+     * @return array
      */
     private function printMsg($flag, $msg = '', $proMsg = '', $newName = '') {
         $result = array(
@@ -155,11 +153,32 @@ class UpDownFile
     }
 
     /**
-     * $name      上传文件的表单Name属性
-     * $savePath  上传文件存放目录
-     * $fileKind  上传文件的文件类型：all/image/media/flash/file/array，默认为 all （为空）
-     * $newName   上传后文件的命名，如为空，则随机命名
-     * $maxSize   上传文件的大小控制，默认为 10 M
+     * 获取一个带后缀的文件名的后缀
+     *
+     * @param  string $name 一个带后缀的文件名，例如：image.jpg
+     *
+     * @return mixed|string
+     */
+    public function getFileExt($name) {
+        //获得文件扩展名
+        $temp_arr = explode(".", $name);
+        $file_ext = end($temp_arr);
+        $file_ext = strtolower($file_ext);
+        return $file_ext;
+//        $file_ext = array_pop($temp_arr);
+//        $file_ext = trim($file_ext);
+//        $file_ext = pathinfo($name,PATHINFO_EXTENSION),
+    }
+
+    /**
+     * 上传文件(单个)
+     *
+     * @param string $name 上传文件的表单Name属性
+     * @param string $savePath 上传文件存放目录
+     * @param string $fileKind [optional]   上传文件的文件类型：all/image/media/flash/file/array，默认为 all （为空）
+     * @param string $newName [optional]   上传后文件的命名，如为空，则随机命名
+     * @param string $maxSize [optional]   上传文件的大小控制，默认为 10 M
+     * @return array
      */
     public function upload($name, $savePath, $fileKind = 'all', $newName = '', $maxSize = '10485760') {
         //文件实体、文件名
@@ -221,11 +240,14 @@ class UpDownFile
     }
 
     /**
-     * $name      上传文件的表单Name属性
-     * $savePath  上传文件存放目录
-     * $fileKind  上传文件的文件类型：all/image/media/flash/file/array，默认为 all （为空）
-     * $newName   上传后文件的命名，如为空，则随机命名
-     * $maxSize   上传文件的大小控制，默认为 10 M
+     * 上传文件(多个)
+     *
+     * @param string $name 上传文件的表单Name属性
+     * @param string $savePath 上传文件存放目录
+     * @param string $fileKind [optional]   上传文件的文件类型：all/image/media/flash/file/array，默认为 all （为空）
+     * @param string $newName [optional]   上传后文件的命名，如为空，则随机命名
+     * @param string $maxSize [optional]   上传文件的大小控制，默认为 10 M
+     * @return array
      */
     public function __uploads($name, $savePath, $fileKind = 'all', $newName = '', $maxSize = '10485760') {
         $files = array();
@@ -245,18 +267,22 @@ class UpDownFile
         }
     }
 
-    /**这是一个有硬性规定需要  $name 上传文件 name 属性
-     * $name      上传文件的表单Name属性
-     * $savePath  上传文件存放目录
-     * $fileKind  上传文件的文件类型：all/image/media/flash/file/array，默认为 all （为空）
-     * $newName   上传后文件的命名，如为空，则随机命名
-     * $maxSize   上传文件的大小控制，默认为 10 M
+
+    /**
+     * 上传文件(多个)这是一个有硬性规定需要  $name 上传文件 name 属性
+     *
+     * @param string $name 上传文件的表单Name属性
+     * @param string $savePath 上传文件存放目录
+     * @param string $fileKind [optional]   上传文件的文件类型：all/image/media/flash/file/array，默认为 all （为空）
+     * @param string $newName [optional]   上传后文件的命名，如为空，则随机命名
+     * @param string $maxSize [optional]   上传文件的大小控制，默认为 10 M
+     * @return array
      */
     public function uploads($name, $savePath, $fileKind = 'all', $newName = '', $maxSize = '10485760') {
         $s_count = 0;
         $f_count = 0;
         $result = array(
-            'success'=>1,
+            'success' => 1,
             'msg' => '上传成功',
             'proMsg' => ''
         );
@@ -273,24 +299,24 @@ class UpDownFile
 
                 $ary = $this->upload($key, $savePath, $fileKind);
 
-                if($ary['success']){
+                if ($ary['success']) {
                     $s_count++;
-                }else{
+                } else {
                     $f_count++;
-                    $result['proMsg'] .= $ary['msg'].'-'.$ary['proMsg'];
+                    $result['proMsg'] .= $ary['msg'] . '-' . $ary['proMsg'];
                 }
             }
         }
-        if($f_count > 0){
-            $result['msg'] = '上传部分文件成功，不成功文件数量 ：'.$f_count;
+        if ($f_count > 0) {
+            $result['msg'] = '上传部分文件成功，不成功文件数量 ：' . $f_count;
         }
         return $result;
     }
 
-
     /**
      * Redirect 重定向文件下载
-     * @param $file     下载的文件路径
+     *
+     * @param  string $file
      * @return bool
      */
     public function download_location($file) {
@@ -304,7 +330,8 @@ class UpDownFile
 
     /**
      * header 函数下载
-     * @param $filePath     下载文件路径
+     *
+     * @param  string $filePath
      * @return bool
      */
     public function download_header_pro($filePath) {
@@ -329,7 +356,9 @@ class UpDownFile
 
     /**
      * header 函数下载
-     * @param $file下载文件路径
+     *
+     * @param  string $filePath
+     * @return bool
      */
     public function downLoad_header_mid($file) {
         header("Cache-Control: public");
@@ -343,15 +372,18 @@ class UpDownFile
 
     /**
      * header 函数下载
-     * @param $file下载文件路径
+     *
+     * @param  string $filePath
+     * @return bool
      */
     public function downLoad_header_smp($file) {
-        if(file_exists($file)){
+        if (file_exists($file)) {
             header('content-disposition:attachment;filename=' . basename($file));
             header('content-length:' . filesize($file));
             readfile($file);
         }
     }
 }
+
 ?>
 

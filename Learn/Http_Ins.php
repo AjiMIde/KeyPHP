@@ -3,6 +3,7 @@
  * User        : Aij
  * DateTime    : 2016/4/19-9:18
  * Modified    : 2016/4/19-9:18
+ * Description : 实现使用 Curl,stream,socket,curl upload file 等方式构建 Http post/get 请求获取远程数据
  */
 
 $ary = array(

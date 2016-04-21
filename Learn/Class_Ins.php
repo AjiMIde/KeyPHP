@@ -12,33 +12,33 @@
  */
 class Class_Ins
 {
-    const SIZE = 10;        //³£Á¿ constant value
+    const SIZE = 10;        //å¸¸é‡ constant value
     /**
      * @var int
      */
-    public $value1 = 1;      //¹«¹²±äÁ¿
+    public $value1 = 1;      //å…¬å…±å˜é‡
 
     /**
      * @var int
      */
-    private $value2 = 2;    //Ë½ÓĞ±äÁ¿
+    private $value2 = 2;    //ç§æœ‰å˜é‡
     /**
      * @var int
      */
-    protected $value3 = 3;  //±£»¤±äÁ¿
+    protected $value3 = 3;  //ä¿æŠ¤å˜é‡
 
     /**
      * @var int
      */
-    var $value4;            //¾İËµÊÇ php4 µÄ²úÎï
+    var $value4;            //æ®è¯´æ˜¯ php4 çš„äº§ç‰©
 
     /**
      * @var int
      */
-    static $static_value;   //¾²Ì¬±äÁ¿
+    static $static_value;   //é™æ€å˜é‡
 
     /**
-     * Construct Function
+     * Construct Function è¿™æ˜¯ PHP4 çš„äº§ç‰©ï¼Œå·²ç»æŠ¥åºŸ
      * @param int $v1
      * @param int $v2
      * @param int $v3
@@ -48,12 +48,12 @@ class Class_Ins
         $this->value2 = $v2;
         $this->value3 = $v3;
 
-        $this->value4 = self::SIZE;         //³£Á¿Ö»ÄÜÓÃ self:: ·ÃÎÊ
-        $this->value4 = self::$static_value;//¾²Ì¬±äÁ¿Ò²ÊÇÖ»ÄÜÓÃ self:: ·ÃÎÊ
+        $this->value4 = self::SIZE;         //å¸¸é‡åªèƒ½ç”¨ self:: è®¿é—®
+        $this->value4 = self::$static_value;//é™æ€å˜é‡ä¹Ÿæ˜¯åªèƒ½ç”¨ self:: è®¿é—®
     }
 
     /**
-     * Construct Function  Á½ÖÖ¹¹Ôìº¯ÊıµÄĞ´·¨£¨Ö»È¡Ò»ÖÖ£©
+     * Construct Function  ä¸¤ç§æ„é€ å‡½æ•°çš„å†™æ³•ï¼ˆåªå–ä¸€ç§ï¼‰
      * @param int $v1
      * @param int $v2
      * @param int $v3
@@ -70,16 +70,16 @@ class Class_Ins
      * Static Function
      */
     static function getValue() {
-        print_r(self::$value1 . "===" . self::$static_value);  //¾²Ì¬·½·¨ÖĞÒ²Ö»ÄÜ²ÉÓÃ self:: ·ÃÎÊ±äÁ¿µÈ£»
+        print_r(self::$value1 . "===" . self::$static_value);  //é™æ€æ–¹æ³•ä¸­ä¹Ÿåªèƒ½é‡‡ç”¨ self:: è®¿é—®å˜é‡ç­‰ï¼›
     }
 
     public function getValue_2(){
-        print_r($this->value1 . "===" . $this->static_value);  //¾²Ì¬·½·¨ÖĞÒ²Ö»ÄÜ²ÉÓÃ self:: ·ÃÎÊ±äÁ¿µÈ£»
+        print_r($this->value1 . "===" . $this->static_value);  //é™æ€æ–¹æ³•ä¸­ä¹Ÿåªèƒ½é‡‡ç”¨ self:: è®¿é—®å˜é‡ç­‰ï¼›
     }
 }
 
 /**
- * ¼Ì³ĞµÄÀà
+ * ç»§æ‰¿çš„ç±»
  */
 class Class_son extends Class_Ins
 {
@@ -101,6 +101,6 @@ class Class_son extends Class_Ins
         $this->value5 = $v5;
         $this->value6 = $v6;
 
-        parent::__construct();      //¼Ì³ĞÊ±£¬ĞèÒªµ÷ÓÃ¸¸µÄ¹¹Ôìº¯Êı
+        parent::__construct();      //ç»§æ‰¿æ—¶ï¼Œéœ€è¦è°ƒç”¨çˆ¶çš„æ„é€ å‡½æ•°
     }
 }

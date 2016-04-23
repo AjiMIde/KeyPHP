@@ -81,7 +81,7 @@ class Class_Ins
 /**
  * 继承的类
  */
-class Class_son extends Class_Ins
+class Class_Son extends Class_Ins
 {
     /**
      * @var
@@ -104,3 +104,54 @@ class Class_son extends Class_Ins
         parent::__construct();      //继承时，需要调用父的构造函数
     }
 }
+
+
+/**
+ * Author      : Aji
+ * DateTime    : 2015-10-24
+ * Description : 抽象类，只能使用抽象的方法；不能实例化，只能被继承，常作用于规范代码
+ */
+abstract class Abs_Class{
+    abstract public function getV();
+    abstract public function setV($val);
+}
+
+/**
+ * 抽象类的继承、使用
+ */
+class Abs_Class_Ins extends Abs_Class{
+    public $value = 1;
+    function getV(){
+        return $this->value;
+    }
+    function setV($val){
+        $this->value = $val;
+    }
+}
+
+/**
+ * Author      : Aji
+ * DateTime    : 2015/10/24
+ * Modified    : 2015/10/24
+ * Description : 一个工厂类，专门用来实例化其他类
+ */
+class Factory{
+    /**
+     * 静态方法，根据参数实例化类
+     * @param $para
+     * @return OperationAdd|OperationSub
+     */
+    public static function createObj($para){//静态方法只能通过实例调用过
+        switch ($para){
+            case '+':
+                return new OperationAdd();
+                break;
+            case '-':
+                return new OperationSub();
+                break;
+            default:
+                break;
+        }
+    }
+}
+?>

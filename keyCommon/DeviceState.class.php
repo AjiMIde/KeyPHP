@@ -55,6 +55,18 @@ class DeviceState
      */
     public function __construct() {
         $this->OS = strtoupper(PHP_OS);
+
+        /**
+         * DIRECTORY_SEPARATOR php自带的一个内置常量，用来显示系统分隔符的命令。
+         * 在windows下路径分隔符是\（当然/在部分系统上也是可以正常运行的
+         * 在linux上路径的分隔符是/，DIRECTORY_SEPARATOR 这个常量存在的意义就是会根据不同的操作系统来显示不同的分隔符。
+         */
+        $this->Directory_separator = DIRECTORY_SEPARATOR;
+
+        /**
+         * PATH_SEPARATOR 是一个常量，在linux系统中是一个" : "号,Windows上是一个";"号。
+         */
+        $this->Path_separator = PATH_SEPARATOR;
     }
 
     /**
@@ -75,19 +87,19 @@ class DeviceState
      * @param  string $kind eg:'cpu','storage'
      * @return array
      */
-    public function deviceInfoGet(){
-        if($this->OS != self::LINUX){
+    public function deviceInfoGet() {
+        if ($this->OS != self::LINUX) {
             return "System is not linux";
         }
 
         $args = func_get_args();
         $array = array();
 
-        if(in_array("storage",$args)){
+        if (in_array("storage", $args)) {
             $array['storage'] = $this->deviceStorageGet();
         }
 
-        if(in_array("cpu",$args)){
+        if (in_array("cpu", $args)) {
             $array['cpu'] = $this->deviceCpuGet();
         }
 
@@ -99,11 +111,11 @@ class DeviceState
      *
      * @return array
      */
-    public function deviceStorageGet(){
-        $fp = popen('df -h | grep -E "^(/)"',"r");
+    public function deviceStorageGet() {
+        $fp = popen('df -h | grep -E "^(/)"', "r");
         $rs = "";
-        while(!feof($fp)){
-            $rs .= fread($fp,1024);
+        while (!feof($fp)) {
+            $rs .= fread($fp, 1024);
         }
         pclose($fp);
 
@@ -111,7 +123,7 @@ class DeviceState
         $hdInfoArr = array();
 
         foreach ($hdInfo as $key => $rawHdInfo) {
-            $rawHdInfo = preg_replace("/\s{2,}/", " ", $rawHdInfo);  //�Ѷ���ո񻻳� �� ��
+            $rawHdInfo = preg_replace("/\s{2,}/", " ", $rawHdInfo);
             $rawHdInfoArr = explode(" ", $rawHdInfo);
 
             $file_system = $rawHdInfoArr[0];
@@ -139,8 +151,39 @@ class DeviceState
      *
      * @return array
      */
-    public function deviceCpuGet(){
+    public function deviceCpuGet() {
         return array();
     }
 
+    /**
+     * Return the raw device information
+     *
+     * @param string $param 'a'|' ' 返回所有信息 's' 操作系统的名称 'n' 主机的名称 'r' 版本名 'v' 操作系统的版本号 'm' 核心类型
+     * @return string
+     */
+    public function getRawDeviceInfo($param = "a") {
+        return php_uname($param);
+    }
+
+    //=============
+    /**
+     * 获取当前磁盘所有分区信息（针对Linux)
+     * 进而可求出分区的总大小，已用，剩余等信息
+     *
+     */
+    function getOSDisk() {
+        $pars = array_filter(explode("\n", `df -h`));
+        var_dump($pars);
+        print_r("<br>");
+        foreach ($pars as $par) {
+            if ($par{0} == '/') {//判断如果为分区的话
+                $_tmp = array_values(array_filter(explode(' ', $par)));
+                reset($_tmp);
+                echo "分区挂载点：{$_tmp['5']}，" .
+                    "总大小：{$_tmp['1']}" .
+                    "已使用：{$_tmp['2']}({$_tmp['4']})<br/>";
+            }
+        }
+    }
+    //==========
 }

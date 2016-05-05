@@ -136,7 +136,7 @@ class Document
      */
     public function createDir($dirPath) {
         if (@is_dir($dirPath) === false) {
-            mkdir($dirPath, 0777, true);//true´ú±í¿É´´½¨¶à¼¶Ä¿Â¼;
+            mkdir($dirPath, 0777, true);//trueä»£è¡¨å¯åˆ›å»ºå¤šçº§ç›®å½•;
             chmod($dirPath, 0777);
         }
     }
@@ -155,9 +155,9 @@ class Document
                     self::_getSubFiles($path . "/", $regex, $deep, $fileSize, $fileName, $fileTime, $fileArr);
 
                 } elseif (preg_match($regex, $suffix, $matches)) {
-                    $fileSize[] = round((filesize($path) / 1024), 2);//»ñÈ¡ÎÄ¼ş´óĞ¡
-                    $fileName[] = $path;//»ñÈ¡ÎÄ¼şÃû³Æ
-                    $fileTime[] = date("Y-m-d H:i:s", filemtime($path));//»ñÈ¡ÎÄ¼ş×î½üĞŞ¸ÄÈÕÆÚ
+                    $fileSize[] = round((filesize($path) / 1024), 2);//è·å–æ–‡ä»¶å¤§å°
+                    $fileName[] = $path;//è·å–æ–‡ä»¶åç§°
+                    $fileTime[] = date("Y-m-d H:i:s", filemtime($path));//è·å–æ–‡ä»¶æœ€è¿‘ä¿®æ”¹æ—¥æœŸ
                     $fileArr[] = iconv("GB2312", "UTF-8", $file);
                 }
             }
@@ -192,16 +192,16 @@ class Document
 
         switch ($fileSort) {
             case 'name':
-                array_multisort($fileName, $sortType, SORT_STRING, $fileArr);//°´Ãû×ÖÅÅĞò
+                array_multisort($fileName, $sortType, SORT_STRING, $fileArr);//æŒ‰åå­—æ’åº
                 break;
             case 'time':
-                array_multisort($fileTime, $sortType, SORT_STRING, $fileArr);//°´Ê±¼äÅÅĞò
+                array_multisort($fileTime, $sortType, SORT_STRING, $fileArr);//æŒ‰æ—¶é—´æ’åº
                 break;
             case 'size':
-                array_multisort($fileSize, $sortType, SORT_NUMERIC, $fileArr);//°´´óĞ¡ÅÅĞò
+                array_multisort($fileSize, $sortType, SORT_NUMERIC, $fileArr);//æŒ‰å¤§å°æ’åº
                 break;
             default:
-                array_multisort($fileName, $sortType, SORT_STRING, $fileArr);//°´Ãû×ÖÅÅĞò
+                array_multisort($fileName, $sortType, SORT_STRING, $fileArr);//æŒ‰åå­—æ’åº
                 break;
         }
         return $fileArr;
@@ -426,7 +426,7 @@ class Document
     }
 
     function addFileToZip($path, $zip) {
-        $handler = opendir($path); //´ò¿ªµ±Ç°ÎÄ¼ş¼ĞÓÉ$pathÖ¸¶¨¡£
+        $handler = opendir($path); //æ‰“å¼€å½“å‰æ–‡ä»¶å¤¹ç”±$pathæŒ‡å®šã€‚
         while (($filename = readdir($handler)) !== false) {
             if ($filename != "." && $filename != "..") {
                 if (is_dir($path . "/" . $filename)) {

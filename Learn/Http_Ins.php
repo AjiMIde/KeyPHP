@@ -22,6 +22,7 @@ $server = "http://" . $_SERVER['HTTP_HOST'] . "/KeyPHP/Learn/Http_Ins.php?action
 
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
+
 if ($action == "accept") {
 
     var_dump($_REQUEST);

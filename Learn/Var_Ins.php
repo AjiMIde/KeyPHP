@@ -1,6 +1,9 @@
 <?php
 /**
  * User        : Aij
+ * DateTime    : 2016/5/05-10:35
+ * Modified    : 2016/5/05-11:05
+ * Description : 描述了变量的定义、修改、判断、置空、转换类型、判断类型等。
  */
 
 include_once "../keyCommon/style.php";

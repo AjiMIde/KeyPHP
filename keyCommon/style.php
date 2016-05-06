@@ -5,6 +5,15 @@
  * Modified    : 2016/4/26-19:13
  * Description :
  */
+function h3($content){
+    print_r("<h3>".$content."</h3>");
+}
+function h4($content){
+    print_r("<h4>".$content."</h4>");
+}
+function p($content){
+    print_r("<p>".$content."</p>");
+}
 ?>
 <html>
 <title>Instance</title>
@@ -23,6 +32,10 @@
             margin-bottom: 10px;
             font-size: 24px;
             color:#000;
+            border: 1px solid #8a8a8a;
+            border-radius: 4px;
+            padding: 14px;
+            background: aliceblue;
         }
         h4{
             font-weight: 500;
@@ -31,6 +44,9 @@
             margin-bottom: 10px;
             font-size: 20px;
             color:#000;
+            border-radius: 4px;
+            padding: 8px;
+            background: #EDEDED;
         }
         p{
             padding-left: 30px;

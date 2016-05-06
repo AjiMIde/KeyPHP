@@ -90,3 +90,25 @@ function getRand() {
 }
 
 getRand();
+
+h3("Session/Cookie 的使用");
+h4("session的作用主要在保存会话信息，在访问者浏览网站的期间，对访问者相关的信息进行记录，当浏览器关闭后，会话结束，session数据也就消失了。");
+p("启用session，先使用 session_start");
+
+session_start();
+
+p("session就像个全局数组一样使用");
+
+//$_SESSION['name'] = 'aji';
+
+var_dump($_SESSION);
+
+h4("Cookie的使用与 session 差不多，不过是 session存放于服务器端，而 cookie 存放于客户端");
+p("setcookie ( COOKIE-name, COOKIE-value, time, path, domain )");
+p("过期时间是绝对的，如：2014-4-14 18:00");
+p("路径：默认是“/”，设置在当前域名下COOKIE生效的路径。");
+p("域：域名，默认是当前网站域名。可以设置成 “.speedphp.com”来使得整个网站（包括二级域名）都可以读取该COOKIE。");
+
+setcookie("sex", 'name', time() + 3600);
+
+var_dump($_COOKIE);

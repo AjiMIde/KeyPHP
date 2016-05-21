@@ -144,6 +144,81 @@ function request_upload_by_curl($remote_server, $file) {
     curl_close($ch);
 
     print_r($info);
+}
 
 
+/**
+ * 使用 file_get_contents 在 https 协议下正常使用
+ *
+ * 1，第一种情况只用在 密钥协议 或 链接证书 没有通过认证，一般会用在该 https url 是我们生成的或临时创建出来的给用户使用
+ *
+ * 2，第二种情况可用在该 证书 已经被下载到服务器上。
+ *
+ * 详情参考 [php.net](http://php.net/manual/en/migration56.openssl.php)
+ */
+function https_file_get_contents() {
+    $arrContextOptions = array(
+        "ssl" => array(
+            "verify_peer" => false,
+            "verify_peer_name" => false,
+        ),
+    );
+
+    $arrContextOptions_need = array(
+        "ssl" => array(
+            "cafile" => "/path/to/bundle/ca-bundle.crt",
+            "verify_peer" => true,
+            "verify_peer_name" => true,
+        ),
+    );
+
+    $response = file_get_contents("https://baidu.com", false, stream_context_create($arrContextOptions));
+    echo $response;
+}
+
+/**
+ * Curl 发送 Http 请求
+ * **这个认证是一个升级版（还没有经过测试），该认证可识别 https/http 等协议去发送 http 请求
+ *
+ * @param string $remote_server 远程服务器地址
+ * @param string $post_string 需要附加的参数
+ * @param int $timeout 超时时间，默认 30s
+ * @param string $CA_cert 证书，证书链接，通常为"***\ca_cert.pem""
+ */
+function http_curl($remote_server, $post_string, $timeout = 30, $CA_cert = "") {
+    $SSL = substr($remote_server, 0, 8) == "https://" ? true : false;
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $remote_server);
+
+    //当需要进行一些 SSL 证书认证时，根据条件的多少执行不同的认证级别
+    if ($SSL && $CA_cert) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);   // 只信任CA颁布的证书
+        curl_setopt($ch, CURLOPT_CAINFO, $CA_cert);       // CA根证书（用来验证的网站证书是否是CA颁布）
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);      // 检查证书中是否设置域名，并且是否与提供的主机名匹配
+    } else if ($SSL && !$CA_cert) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);  // 信任任何证书
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);      // 检查证书中是否设置域名
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);      // 检查证书中是否设置域名
+    }
+
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout - 2);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                   //获取的信息以文件流的形式返回，而不是直接输出。
+    curl_setopt($ch, CURLOPT_USERAGENT, "From eky CURL Example beta");//在HTTP请求中包含一个”user-agent”头的字符串
+    curl_setopt($ch, CURLOPT_POST, true);                             //设置为 post
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));           //解决 post 数据过长的问题
+
+    //执行 curl 对象，发送请求
+    $data = curl_exec($ch);
+
+    //查看报错信息
+    if (curl_error($ch)) {
+        print_r(curl_error($ch));
+    } else {
+        print_r($data);
+    }
+    curl_close($ch);
 }

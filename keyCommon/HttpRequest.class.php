@@ -158,10 +158,11 @@ class HttpR
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $remote_server);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST,count($post_array)) ; // 启用时会发送一个常规的POST请求，类型为：application/x-www-form-urlencoded。
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_USERAGENT, self::USER_AGENT);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         //执行 curl 对象，发送请求
         $data = curl_exec($ch);
@@ -169,6 +170,43 @@ class HttpR
 
         return $data;
     }
+
+    /**
+     * Use Curl to send http Request(get)
+     *
+     * @param string $remote_server
+     * @param int $timeout
+     */
+    function http_curl_get($remote_server, $timeout = 20){
+        $ch = curl_init($remote_server) ;
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true) ; // 获取数据返回
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true) ; // 在启用 CURLOPT_RETURNTRANSFER 时候将获取数据返回
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+
+        return curl_exec($ch) ;
+    }
+
+    /**
+     * Use Curl to set cookie
+     * 
+     * @param string $remote_server
+     * @param string $cookie
+     * @return bool 
+     */
+    function http_curl_cookie($remote_server,$cookie){
+        $header[]= 'Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, text/html, * '. '/* ';
+        $header[]= 'Accept-Language: zh-cn ';
+        $header[]= self::USER_AGENT;
+        $header[]= 'Host: '.$remote_server;
+        $header[]= 'Connection: Keep-Alive ';
+        $header[]= 'Cookie: '.$cookie;
+
+        return curl_setopt($curlHandel,CURLOPT_HTTPHEADER,$header);  
+    }
+
+
+
+
 
     /**
      * Use stream context to send Http Request(post)

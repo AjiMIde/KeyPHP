@@ -1,6 +1,10 @@
 <?php
 include_once "../keyCommon/upDownFile.class.php";
 
+include_once '../keyCommon/style.php';
+
+udmd('类： upDownFile.class.php 的使用，上传（多上传）文件的应用');
+
 $upDownFileObj = new UpDownFile();
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 

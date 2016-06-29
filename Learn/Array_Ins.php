@@ -1,13 +1,3 @@
-<html>
-    <title>Array Instance</title>
-    <head>
-        <style>
-            body{font-family: "Meiryo UI","Helvetica Neue",Helvetica,Arial, "Hiragino Sans GB","Hiragino Sans GB W3", "Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei", sans-serif, \5FAE\8F6F\96C5\9ED1,\9ED1\4F53,\5b8b\4f53 !important}
-            h3{30px 0 1px 0}
-
-        </style>
-    </head>
-</html>
 <?php
 /**
  * User        : Aij
@@ -15,7 +5,9 @@
  * Modified    : 2016/4/21-13:35
  * Description : 描述了数组的一些基本操作，如定义、使用、删除、增加、合并、获取等。。
  */
+include_once '../keyCommon/style.php';
 
+udmd('描述了数组的一些基本操作，如定义、使用、删除、增加、合并、获取等。。');
 /**
  * Common Ary
  */

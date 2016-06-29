@@ -6,11 +6,9 @@
  * Description : 描述了变量的定义、修改、判断、置空、转换类型、判断类型等。
  */
 
-include_once "../keyCommon/style.php";
+include_once '../keyCommon/style.php' ;
 
-print_r("<h3></h3>");
-print_r("<h4></h4>");
-print_r("<p></p>");
+udmd('描述了变量的定义、修改、判断、置空、转换类型、判断类型等');
 
 print_r("<h3>定义：PHP 与 Ruby、JavaScript 一样属于 弱类型的松散型语言，可定义变量为任何类型：</h3>");
 

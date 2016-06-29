@@ -5,7 +5,9 @@
  * Modified    : 2016/4/29-10:37
  * Description :
  */
-include_once "../keyCommon/style.php";
+include_once '../keyCommon/style.php';
+
+udmd('描述了 string 的一些基本操作，如义、使用、删除、增加、合并、获取等。。');
 
 $str = "Hello World !";
 print_r("<p>" . $str . "</p>");

@@ -1,6 +1,9 @@
 <?php
+
 include_once "../keyCommon/Document.class.php";
 include_once '../keyCommon/style.php';
+
+udmd('类： Document.class.php 的使用');
 
 $instance = new Document();
 

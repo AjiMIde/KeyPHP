@@ -5,6 +5,11 @@
  * Modified    : 2016/4/26
  * Description : 描述了时间 Date 的一些基本操作，如获取、计算、格式
  */
+
+include_once '../keyCommon/style.php';
+
+udmd('描述了时间 Date 的一些基本操作，如获取、计算、格式');
+
 print_r("<h3>输出各种格式的 dateTime </h3>");
 print_r("<p>" . date('Y/m/d') . "</p>");
 print_r("<p>" . date("Y.m.d") . "</p>");

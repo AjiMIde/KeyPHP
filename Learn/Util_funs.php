@@ -5,7 +5,9 @@
  * Modified    : 2016/4/18-10:03
  * Description : 介绍几种常用的函数
  */
-include_once '../keyCommon/style.php';
+include_once '../keyCommon/style.php' ;
+
+udmd('PHP 常见的几种函数的使用，如：‘获取类名、函数名、方法、参数数量、随机函数、Session/Cookie’ ');
 
 /**
  * # 传入参数的数量

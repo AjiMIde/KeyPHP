@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2016-2020 Aji
  * That's a interface to get some information of a device(linux),offer several methods above:

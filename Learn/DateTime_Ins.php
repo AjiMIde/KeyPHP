@@ -10,50 +10,50 @@ include_once '../keyCommon/style.php';
 
 udmd('描述了时间 Date 的一些基本操作，如获取、计算、格式');
 
-print_r("<h3>输出各种格式的 dateTime </h3>");
-print_r("<p>" . date('Y/m/d') . "</p>");
-print_r("<p>" . date("Y.m.d") . "</p>");
-print_r("<p>" . date("Y-m-d") . "</p>");
+
+h4("输出各种格式的 dateTime ");
+p(date('Y/m/d'));
+p(date("Y.m.d"));
+p(date("Y-m-d"));
 
 
-print_r("<h3>使用 时间戳：timestamp ，是在当前的时间上再加上一些日子？用法如下：mktime(hour,minute,second,month,day,year,is_dst)</h3>");
-
+h4("使用 时间戳：timestamp ，是在当前的时间上再加上一些日子？用法如下：mktime(hour,minute,second,month,day,year,is_dst)");
 $timeStamp = mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"));
-print_r("<p>Tomorrow is:" . date("Y/m/d", $timeStamp) . "</p>");
+p("Tomorrow is:" . date("Y/m/d", $timeStamp));
 
 
 $timeStamp = mktime(0, 0, 0, date("m"), date("d") - 1, date("Y"));
-print_r("<p>Yesterday is:" . date("Y/m/d", $timeStamp) . "</p>");
+print_r("<p>Yesterday is:" . date("Y/m/d", $timeStamp));
 
 
-print_r("<h3>利用时间戳指定一个特定日子并生成时间对象，如下：</h3>");
-print_r("<p>" . date("Y-m-d", strtotime('2015-04-26')) . "</p>");
-print_r("<p>" . date("Y-m-d", strtotime('15-04-26')) . "</p>");
-print_r("<p>" . date("Y-m-d", strtotime('April 26 2015')) . "</p>");
+h4("利用时间戳指定一个特定日子并生成时间对象，如下：");
+p(date("Y-m-d", strtotime('2015-04-26')));
+p(date("Y-m-d", strtotime('15-04-26')));
+p(date("Y-m-d", strtotime('April 26 2015')));
 
 
-print_r("<h3>利用时间戳指定一个特定日子并进行计算，如下：</h3>");
-print_r("<p>" . date("Y-m-d", strtotime('2015-04-26') + (60 * 60 * 24)) . "</p>");
-print_r("<p>" . date("Y-m-d", strtotime('15-04-26 13:00:00 +1 day')) . "</p>");
+h4("利用时间戳指定一个特定日子并进行计算，如下：");
+p(date("Y-m-d", strtotime('2015-04-26') + (60 * 60 * 24)));
+p(date("Y-m-d", strtotime('15-04-26 13:00:00 +1 day')));
 
 
-print_r("<h3>时间戳可以传入任意参数，如下：</h3>");
-print_r("<p>".date("Y-m-d", strtotime("now"))."</p>");
-print_r("<p>".date("Y-m-d", strtotime("3 October 2005"))."</p>");
-print_r("<p>".date("Y-m-d", strtotime("+5 hours"))."</p>");
-print_r("<p>".date("Y-m-d", strtotime("+1 week"))."</p>");
-print_r("<p>".date("Y-m-d", strtotime("+1 week 3 days 7 hours 5 seconds"))."</p>");
-print_r("<p>".date("Y-m-d", strtotime("next Monday"))."</p>");
-print_r("<p>".date("Y-m-d", strtotime("last Sunday"))."</p>");
+h4("时间戳可以传入任意参数，如下：");
+p(date("Y-m-d", strtotime("now")));
+p(date("Y-m-d", strtotime("3 October 2005")));
+p(date("Y-m-d", strtotime("+5 hours")));
+p(date("Y-m-d", strtotime("+1 week")));
+p(date("Y-m-d", strtotime("+1 week 3 days 7 hours 5 seconds")));
+p(date("Y-m-d", strtotime("next Monday")));
+p(date("Y-m-d", strtotime("last Sunday")));
 
 
-print_r("<h3>strtotime() 函数将任何英文文本的日期时间描述解析为 Unix 时间。（自 January 1 1970 00:00:00 GMT 起的秒数）</h3>");
-print_r("<p>今天的Unix时间戳-秒：" . strtotime(date("Y-m-d")) . "</p>");
-print_r("<p>今天的Unix时间戳-年：" . (strtotime(date("Y-m-d")) / 60 / 60 / 24 / 365) . "</p>");
+h4("strtotime() 函数将任何英文文本的日期时间描述解析为 Unix 时间。（自 January 1 1970 00:00:00 GMT 起的秒数）");
+p("今天的Unix时间戳-秒：" . strtotime(date("Y-m-d")));
+p("今天的Unix时间戳-年：" . (strtotime(date("Y-m-d")) / 60 / 60 / 24 / 365));
 
 
-print_r("<h3>利用 strtotime() 函数计算两天的间隔：与去年2015-04-26 的天数间隔</h3>");
-print_r("<p>" . round(abs(strtotime(date("Y-m-d")) - strtotime("2015-04-26")) / 60 / 60 / 24, 0) . "</p>");
+h4("利用 strtotime() 函数计算两天的间隔：与去年2015-04-26 的天数间隔");
+p(round(abs(strtotime(date("Y-m-d")) - strtotime("2015-04-26")) / 60 / 60 / 24, 0));
 
 
 ?>

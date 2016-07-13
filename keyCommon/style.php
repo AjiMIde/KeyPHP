@@ -87,7 +87,7 @@ function get_caller_info() {
     <style>
         body {
             font-family: "Meiryo UI", "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif, \5FAE\8F6F\96C5\9ED1, \9ED1\4F53, \5b8b\4f53 !important;
-            padding:30px 100px;
+            padding:30px 300px;
             color:#545454;
             line-height: 1.4;
         }
@@ -130,9 +130,10 @@ function get_caller_info() {
         pre code{
             font-size: 14px;
             font-family: consolas;
-            width: 400px;
+            min-width: 400px;
             border-radius: 4px;
             border: 1px solid #d0d0d0;
+            display: inline-block !important;
             /*margin-top: 10px;*/
             /*margin-left: 10px;*/
         }

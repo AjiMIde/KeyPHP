@@ -10,7 +10,11 @@
  * ## Inherit a class and use static/self::/$this
  *
  */
-class Class_Ins
+include_once '../keyCommon/style.php';
+udmd('Create a new class in php , just like object-oriented program language, 
+      Inherit a class and use static/self::/$this');
+
+$s = 'class Class_Ins
 {
     const SIZE = 10;        //常量 constant value
     /**
@@ -76,9 +80,10 @@ class Class_Ins
     public function getValue_2(){
         print_r($this->value1 . "===" . $this->static_value);  //静态方法中也只能采用 self:: 访问变量等；
     }
-}
+}';
+code($s);
 
-/**
+$s = '/**
  * 继承的类
  */
 class Class_Son extends Class_Ins
@@ -103,10 +108,11 @@ class Class_Son extends Class_Ins
 
         parent::__construct();      //继承时，需要调用父的构造函数
     }
-}
+}';
+code($s);
 
 
-/**
+$s = '/**
  * Author      : Aji
  * DateTime    : 2015-10-24
  * Description : 抽象类，只能使用抽象的方法；不能实例化，只能被继承，常作用于规范代码
@@ -114,9 +120,10 @@ class Class_Son extends Class_Ins
 abstract class Abs_Class{
     abstract public function getV();
     abstract public function setV($val);
-}
+}';
+code($s);
 
-/**
+$s = '/**
  * 抽象类的继承、使用
  */
 class Abs_Class_Ins extends Abs_Class{
@@ -127,9 +134,10 @@ class Abs_Class_Ins extends Abs_Class{
     function setV($val){
         $this->value = $val;
     }
-}
+}';
+code($s);
 
-/**
+$s = '/**
  * Author      : Aji
  * DateTime    : 2015/10/24
  * Modified    : 2015/10/24
@@ -143,15 +151,16 @@ class Factory{
      */
     public static function createObj($para){//静态方法只能通过实例调用过
         switch ($para){
-            case '+':
+            case "+":
                 return new OperationAdd();
                 break;
-            case '-':
+            case "-":
                 return new OperationSub();
                 break;
             default:
                 break;
         }
     }
-}
+}';
+code($s);
 ?>

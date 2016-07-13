@@ -33,8 +33,14 @@ function h3($content){
 function h4($content){
     print_r("<h4>".$content."</h4>");
 }
+function h6($content){
+    print_r("<h6>".$content."</h6>");
+}
 function p($content){
     print_r("<p>".$content."</p>");
+}
+function code($content){
+    print_r("<pre><code>$content</code></pre>");
 }
 
 function get_caller_info() {
@@ -69,8 +75,14 @@ function get_caller_info() {
     return($c);
 }
 ?>
+
 <html>
 <title>Instance</title>
+<link rel="stylesheet" href="http://127.0.0.1:8090/highlight/styles/tomorrow.css">
+<script type="text/javascript" src="http://127.0.0.1:8090/highlight/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
 <head>
     <style>
         body {
@@ -113,6 +125,16 @@ function get_caller_info() {
             font-weight: 600;
         }
         .udmd div{
+        }
+
+        pre code{
+            font-size: 14px;
+            font-family: consolas;
+            width: 400px;
+            border-radius: 4px;
+            border: 1px solid #d0d0d0;
+            /*margin-top: 10px;*/
+            /*margin-left: 10px;*/
         }
 
     </style>
